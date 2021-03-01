@@ -16,6 +16,16 @@ function preload() {
 
 function getRate(data) {
   rateData = data;
+  bills.push(new Bill(rateData.conversion_rates.USD, 150,550));
+  bills.push(new Bill(rateData.conversion_rates.EUR, 250,550));
+  bills.push(new Bill(rateData.conversion_rates.CAD, 350,550));
+  bills.push(new Bill(rateData.conversion_rates.GBP, 450,550));
+  bills.push(new Bill(rateData.conversion_rates.CHF, 550,550));
+  bills.push(new Bill(rateData.conversion_rates.NZD, 150,1250));
+  bills.push(new Bill(rateData.conversion_rates.AUD, 250,1250));
+  bills.push(new Bill(rateData.conversion_rates.CNY, 350,1250));
+  bills.push(new Bill(rateData.conversion_rates.SEK, 450,1250));
+  bills.push(new Bill(rateData.conversion_rates.JPY, 600,1260));
 }
 
 function setup() {
@@ -28,23 +38,15 @@ function setup() {
   button.position(windowWidth / 2 + 50, 80)
   button.mousePressed(updateCode);
 
-  bills.push(new Bill(rateData.conversion_rates.USD, 150,550));
-  bills.push(new Bill(rateData.conversion_rates.EUR, 250,550));
-  bills.push(new Bill(rateData.conversion_rates.CAD, 350,550));
-  bills.push(new Bill(rateData.conversion_rates.GBP, 450,550));
-  bills.push(new Bill(rateData.conversion_rates.CHF, 550,550));
-  bills.push(new Bill(rateData.conversion_rates.NZD, 150,1250));
-  bills.push(new Bill(rateData.conversion_rates.AUD, 250,1250));
-  bills.push(new Bill(rateData.conversion_rates.CNY, 350,1250));
-  bills.push(new Bill(rateData.conversion_rates.SEK, 450,1250));
-  bills.push(new Bill(rateData.conversion_rates.JPY, 600,1260));
-
 }
 
 function updateCode() {
   currCode = input.value();
   var url = main_url + currCode;
   loadJSON(url, getRate);
+  for (let i=0; i<bills.length; i++) {
+    bills.splice(i);
+  }
 }
 
 function draw() {
@@ -76,7 +78,7 @@ class Bill {
   constructor(value, yVal, xVal) {
     this.x = xVal;
     this.y = yVal;
-    this.size = map(value, 0, 10, 20, 50); //idk how to put the updated inputted currency code and map it in accordance to that, tried to map from 0 to rateData.conversion_rates.currCode but doesnt work
+    this.size = map(value, 0, 10, 20, 50);
   }
 
   render() {
